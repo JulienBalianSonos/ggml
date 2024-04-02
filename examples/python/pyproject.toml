@@ -6,10 +6,10 @@ build-backend = "setuptools.build_meta"
 [project]
 
 name = "ggml"
+authors = [{ name = "Georgi Gerganov", email = "ggerganov@gmail.com" }]
 keywords = ["machine learning", "deep learning", "inference engine"]
 version = "0.0.1"
 description = "GGML ffi bindings in python"
-authors = ["Georgi Gerganov <ggerganov@gmail.com>"]
 classifiers = [
     'Development Status :: 2 - Beta',
     'Intended Audience :: Developers',
