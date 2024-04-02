@@ -19,7 +19,27 @@ quants = [
     type
     for type in range(lib.GGML_TYPE_COUNT)
     if lib.ggml_is_quantized(type)
-    and type not in [lib.GGML_TYPE_Q8_1, lib.GGML_TYPE_Q8_K]  # Apparently not supported
+    # Apparently not supported
+    and type
+    not in [
+        # not supported {
+        lib.GGML_TYPE_IQ1_M,
+        lib.GGML_TYPE_IQ1_S,
+        lib.GGML_TYPE_Q8_K,
+        lib.GGML_TYPE_Q8_1,
+        lib.GGML_TYPE_Q8_K,
+        # }
+        #
+        # need specific .map , .neighbours, .grids to be assigned in static {
+        # see ggml-quants.c
+        # // ================================ IQ2 quantization =============================================
+        lib.GGML_TYPE_IQ2_S,
+        lib.GGML_TYPE_IQ2_XS,
+        lib.GGML_TYPE_IQ2_XXS,
+        lib.GGML_TYPE_IQ3_S,
+        lib.GGML_TYPE_IQ3_XXS,
+        # }
+    ]
 ]
 # quants = [lib.GGML_TYPE_Q2_K] # Test a single one
 
@@ -40,9 +60,6 @@ plt.figure(figsize=(ncols * 5, nrows * 5), layout="tight")
 
 for i, type in enumerate(quants):
     print(i)
-    if i in [3, 6, 7]:
-        print(f"skip: type id = {i}, need specific structures: grid, map, neighbours")
-        continue
     plt.subplot(nrows, ncols, i + 1)
     try:
         if type == None:
