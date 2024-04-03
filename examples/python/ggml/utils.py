@@ -62,6 +62,12 @@ def copy(from_tensor: TensorLike, to_tensor: TensorLike, allow_requantize: bool 
         __set_floats(to_tensor, __get_floats(from_tensor))
 
 
+def raw_copy(to_tensor: TensorLike, from_tensor: TensorLike):
+    return ffi.memmove(
+        __get_data(to_tensor), __get_data(from_tensor), __get_nbytes(from_tensor)
+    )
+
+
 def numpy(
     tensor: ffi.CData,
     allow_copy: Union[bool, np.ndarray] = False,
